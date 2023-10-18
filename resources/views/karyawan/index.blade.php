@@ -2,7 +2,7 @@
 
 @section('content')
 
-      <h2>Mahasiswa</h2>
+      <h2>Data Karyawan Pemegang SIO/Lisensi Dan AK3 UMUM</h2>
       <body>
     <div class="container mt-5">
     <div class="col-auto">
@@ -10,6 +10,8 @@
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Import data
           </button>
+    <a href="{{ url('karyawan/create') }}"><button class="btn bg-secondary" style="float: right">Tambah Data Pelanggan</button></a>
+
                 <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
