@@ -26,7 +26,8 @@ Route::get('/karyawan/create', [App\Http\Controllers\KaryawanController::class, 
 Route::post('/karyawan', [App\Http\Controllers\KaryawanController::class, 'store']);
 Route::get('/karyawan/{id}/edit', [App\Http\Controllers\KaryawanController::class, 'edit']);
 Route::post('/karyawan-update', [App\Http\Controllers\KaryawanController::class, 'update']);
-Route::delete('/karyawan/{id}', [App\Http\Controllers\KaryawanController::class, 'destroy']);
+Route::get('/karyawan/{id}/delete', [App\Http\Controllers\KaryawanController::class, 'destroy']);
+Route::post('/karyawan-search', [App\Http\Controllers\KaryawanController::class, 'index']);
 
 Route::post('/importexcel',[App\Http\Controllers\KaryawanController::class,'importexcel'])->name('importexcel');
 

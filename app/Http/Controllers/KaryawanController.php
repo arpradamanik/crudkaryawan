@@ -8,6 +8,7 @@ use App\Imports\KaryawanImport;
 use App\Models\karyawan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -21,7 +22,7 @@ class KaryawanController extends Controller
 
 
 
-    public function index()
+    public function index(Request $request)
     {
         // return view('karyawan.create');
         
@@ -29,7 +30,6 @@ class KaryawanController extends Controller
         if ($search !="") {
             $karyawan = DB::table('karyawan')->where('karyawan_name','LIKE',"%$search%")->get();
         }else{
-
             $karyawan = DB::table('karyawan')->paginate(20);
         }
         $data = compact('karyawan','search');
@@ -71,11 +71,14 @@ class KaryawanController extends Controller
                 'karyawan_nomor' => 'required',
                 'karyawan_tanggal' => 'required',
                 'karyawan_masa' => 'required',
-                'foto' => 'required|file|mimes:jpeg,png,jpg|max:2048',
+                'karyawan_foto' => 'required|file|mimes:jpeg,png,jpg|max:2048',
             ]
         );
 
-        $foto = $request->file('foto')->store('image', 'public');
+        // $foto = $request->file('karyawan_foto')->store('image', 'public');
+        $fileUpload = $request->file('karyawan_foto');
+        $namaFile = time() . rand(100, 10000) . '.' . $fileUpload->getClientOriginalExtension();
+        $fileUpload->move(public_path() . '/image', $namaFile);
 
         $karyawan = new karyawan;
         $karyawan->karyawan_name = $request['karyawan_name'];
@@ -84,9 +87,9 @@ class KaryawanController extends Controller
         $karyawan->karyawan_nomor = $request['karyawan_nomor'];
         $karyawan->karyawan_tanggal = $request['karyawan_tanggal'];
         $karyawan->karyawan_masa = $request['karyawan_masa'];
-        $karyawan->foto = $foto;
+        $karyawan->karyawan_foto = $namaFile;
         $karyawan->save();
-        return redirect('/karyawan/view');
+        return redirect('/karyawan');
     }
 
     /**
@@ -122,19 +125,54 @@ class KaryawanController extends Controller
      */
     public function update(Request $request)
     {
-        $karyawan = karyawan::find($request->id)->get();
-        if($request->hasFile('foto')){
-            $foto = $request->file('foto')->store('image', 'public');
-            $karyawan->foto = $foto;
+        $karyawan = karyawan::find($request->id);
+        $foto_old = $karyawan->karyawan_foto;
+
+        if($request->karyawan_foto){
+            // dd('ada');
+            // $foto = $request->file('foto')->store('image', 'public');
+            // $karyawan->karyawan_foto = $foto;
+
+            $namaFile = $karyawan->karyawan_foto;
+            $fileUpload = $request->karyawan_foto;
+            $fotoPath = public_path() . '/image/' . $namaFile;
+
+            // cek file di dalam local storage
+            if (File::exists($fotoPath)) {
+                File::delete($fotoPath); // hapus file
+
+                // memecah nama file
+                $pecahNamaFile = explode('.', $namaFile);
+                $namaFile = $pecahNamaFile[0] . '.' . $fileUpload->getClientOriginalExtension(); // ganti ekstensi
+            } else {
+                // buat nama file baru
+                $namaFile = time() . rand(100, 10000) . '.' . $fileUpload->getClientOriginalExtension();
+            }
+
+            // simpan file ke dalam local storage
+            $fileUpload->move(public_path() . '/image/', $namaFile);
+
+            // simpan ke dalam database
+            $karyawan->karyawan_name = $request['karyawan_name'];
+            $karyawan->karyawan_kebun = $request['karyawan_kebun'];
+            $karyawan->karyawan_jenis = $request['karyawan_jenis'];
+            $karyawan->karyawan_nomor = $request['karyawan_nomor'];
+            $karyawan->karyawan_tanggal = $request['karyawan_tanggal'];
+            $karyawan->karyawan_masa = $request['karyawan_masa'];
+            $karyawan->karyawan_foto = $namaFile;
+            $karyawan->save();
+        } else {
+
+            $karyawan->karyawan_name = $request['karyawan_name'];
+            $karyawan->karyawan_kebun = $request['karyawan_kebun'];
+            $karyawan->karyawan_jenis = $request['karyawan_jenis'];
+            $karyawan->karyawan_nomor = $request['karyawan_nomor'];
+            $karyawan->karyawan_tanggal = $request['karyawan_tanggal'];
+            $karyawan->karyawan_masa = $request['karyawan_masa'];
+            $karyawan->karyawan_foto = $foto_old;
+            $karyawan->save();
         }
-        $karyawan->karyawan_name = $request['karyawan_name'];
-        $karyawan->karyawan_kebun = $request['karyawan_kebun'];
-        $karyawan->karyawan_jenis = $request['karyawan_jenis'];
-        $karyawan->karyawan_nomor = $request['karyawan_nomor'];
-        $karyawan->karyawan_tanggal = $request['karyawan_tanggal'];
-        $karyawan->karyawan_masa = $request['karyawan_masa'];
-        $karyawan->save();
-        dd('berasil');
+
         return redirect('/karyawan');
     }
 
@@ -144,19 +182,24 @@ class KaryawanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($primarykey)
+    public function destroy($id)
     {
-        echo $primarykey;
-        karyawan::find($primarykey)->delete();
+        $dataKaryawan = karyawan::find($id);
+        $fotoPath = public_path() . '/image/' . $dataKaryawan->karyawan_foto;
+
+        // jika file ditemukan, maka hapus dari local storage
+        if ($dataKaryawan->karyawan_foto && File::exists($fotoPath)) {
+            File::delete($fotoPath); // hapus file
+        }
+        // echo $id;
+        karyawan::find($id)->delete();
         return redirect()->back();
     }
 
     public function importexcel(Request $request){
         $file = $request->file('file');
-        // dd($file);
         Excel::import(new KaryawanImport, $file);
         return redirect()->back()->with('success', 'Data berhasil diimpor.');
     }
 
-   
 }

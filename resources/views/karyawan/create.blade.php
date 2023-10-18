@@ -10,7 +10,7 @@
     <div class="bg-info" >
         <h1 class="text-center">Data Karyawan Pemegang SIO/Lisensi Dan AK3 UMUM</h1>
     </div>
-    <form class="row g-3" method="GET" enctype="multipart/form-data">
+    <form class="row g-3" action="/karyawan" method="post" enctype="multipart/form-data">
         @csrf
         <div class="col-md-6">
           <label for="inputEmail4" class="form-label">Nama</label>
@@ -75,7 +75,7 @@
 
         <div class="col-md-6">
           <label for="inputPassword4" class="form-label">Foto</label>
-          <input type="file" name="foto" class="form-control" id="inputPassword4">
+          <input type="file" name="karyawan_foto" class="form-control" id="inputPassword4">
           <span class="text-danger">
             @error('foto')
             {{$message}}

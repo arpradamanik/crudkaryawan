@@ -35,7 +35,8 @@
           </form>
           </div>
         </div>
-      <form class="d-flex mb-5" >
+      <form class="d-flex mb-5" action="karyawan-search" method="post">
+        @csrf
         <input class="form-control me-2" value="{{$search}}" type="search" name="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-success" type="submit">Cari</button>
       </form>
@@ -66,7 +67,10 @@
                 <td scope="row">{{$item->karyawan_tanggal}}</td>
                 <td scope="row">{{$item->karyawan_masa}}</td>
                 <td scope="row">
+                  @if($item->karyawan_foto)
                   <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#foto{{$item->id}}">Lihat</button>
+                  {{-- <a href="{{asset('image/'.$item->karyawan_foto)}}" target="_blank">lihat</a> --}}
+                  @endif
                 </td>
                 <td scope="row">
                     <a href="{{url('/karyawan/'. $item->id .'/delete')}}"><button class="btn btn-danger">Hapus</button></a>
@@ -77,7 +81,7 @@
                   <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content modal-content-lg">
                       <div class="modal-body">
-                        <img src="{{url('storage/'.$item->karyawan_foto)}}" class="img-fluid" alt="">
+                        <img src="{{asset('image/'.$item->karyawan_foto)}}" class="img-fluid" alt="">
                       </div>
                     </div>
                   </div>
@@ -85,6 +89,11 @@
                 
               </tr>
               @endforeach
+              @if($karyawan->isEmpty())
+              <tr>
+                <td scope="row" colspan="8" class="text-center fw-semibold text-muted">Data kosong!</td>
+              </tr>
+              @endif
             </tbody>
           </table>
 

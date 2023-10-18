@@ -41,12 +41,12 @@
         </div>
 
         <div class="col-md-3">
-          <img src="{{Storage::url($karyawan->foto)}}" class="img-fluid" alt="">
+          <img src="{{asset('image/'.$karyawan->karyawan_foto)}}" class="img-fluid" alt="">
         </div>
 
         <div class="col-md-6">
           <label for="inputPassword4" class="form-label">Ubah Foto</label>
-          <input type="file" name="foto" class="form-control" id="inputPassword4">
+          <input type="file" name="karyawan_foto" class="form-control" id="inputPassword4">
         </div>
         
         <div class="col-12">
