@@ -57,25 +57,25 @@
                     {{-- {{printarray($karyawan->toArray())}} --}}
               
               <tr>
-                <th scope="row">{{$item->karyawan_name}}</th>
-                <th scope="row">{{$item->karyawan_kebun}}</th>
-                <th scope="row">{{$item->karyawan_jenis}}</th>
-                <th scope="row">{{$item->karyawan_nomor}}</th>
-                <th scope="row">{{$item->karyawan_tanggal}}</th>
-                <th scope="row">{{$item->karyawan_masa}}</th>
-                <th scope="row">
-                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#foto{{$item->karyawanid}}">Lihat</button>
-                </th>
-                <th scope="row">
-                    <a href="{{url('/teacher/delete')}}/{{$item->karyawanid}}"><button class="btn btn-danger">Hapus</button></a>
-                   <a href="{{url('/teacher/update')}}/{{$item->karyawanid}}"> <button class="btn btn-success">Edit</button></a>
-                </th>
+                <td scope="row">{{$item->karyawan_name}}</td>
+                <td scope="row">{{$item->karyawan_kebun}}</td>
+                <td scope="row">{{$item->karyawan_jenis}}</td>
+                <td scope="row">{{$item->karyawan_nomor}}</td>
+                <td scope="row">{{$item->karyawan_tanggal}}</td>
+                <td scope="row">{{$item->karyawan_masa}}</td>
+                <td scope="row">
+                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#foto{{$item->id}}">Lihat</button>
+                </td>
+                <td scope="row">
+                    <a href="{{url('/karyawan/'. $item->id .'/delete')}}"><button class="btn btn-danger">Hapus</button></a>
+                   <a href="{{url('/karyawan/'. $item->id .'/edit')}}"> <button class="btn btn-success">Edit</button></a>
+                </td>
 
-                <div class="modal fade" id="foto{{$item->karyawanid}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="foto{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content modal-content-lg">
                       <div class="modal-body">
-                        <img src="{{url('storage/'.$item->foto)}}" class="img-fluid" alt="">
+                        <img src="{{url('storage/'.$item->karyawan_foto)}}" class="img-fluid" alt="">
                       </div>
                     </div>
                   </div>

@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Imports\KaryawanImport;
+use App\Models\karyawan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Events\Validated;
 use Maatwebsite\Excel\Facades\Excel;
 
 
-
-class teacherController extends Controller
+class KaryawanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,8 +23,17 @@ class teacherController extends Controller
 
     public function index()
     {
-        return view('mahasiswa.index');
-        //
+        // return view('karyawan.create');
+        
+        $search =  $request['search'] ?? "";
+        if ($search !="") {
+            $karyawan = DB::table('karyawan')->where('karyawan_name','LIKE',"%$search%")->get();
+        }else{
+
+            $karyawan = DB::table('karyawan')->paginate(20);
+        }
+        $data = compact('karyawan','search');
+        return view('karyawan.index')->with($data);
     }
 
     /**
@@ -68,7 +77,7 @@ class teacherController extends Controller
 
         $foto = $request->file('foto')->store('image', 'public');
 
-        $karyawan = new teacher;
+        $karyawan = new karyawan;
         $karyawan->karyawan_name = $request['karyawan_name'];
         $karyawan->karyawan_kebun = $request['karyawan_kebun'];
         $karyawan->karyawan_jenis = $request['karyawan_jenis'];
@@ -77,7 +86,7 @@ class teacherController extends Controller
         $karyawan->karyawan_masa = $request['karyawan_masa'];
         $karyawan->foto = $foto;
         $karyawan->save();
-        return redirect('/teacher/view');
+        return redirect('/karyawan/view');
     }
 
     /**
@@ -99,9 +108,9 @@ class teacherController extends Controller
      */
     public function edit($id)
     {
-        $karyawan = Teacher::find($id);
+        $karyawan = karyawan::where('id', $id)->first();
         $data = compact('karyawan');
-        return view('updateteacher')->with($data);
+        return view('karyawan.edit')->with($data);
     }
 
     /**
@@ -111,9 +120,9 @@ class teacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $karyawan = Teacher::find($id);
+        $karyawan = karyawan::find($request->id)->get();
         if($request->hasFile('foto')){
             $foto = $request->file('foto')->store('image', 'public');
             $karyawan->foto = $foto;
@@ -125,7 +134,8 @@ class teacherController extends Controller
         $karyawan->karyawan_tanggal = $request['karyawan_tanggal'];
         $karyawan->karyawan_masa = $request['karyawan_masa'];
         $karyawan->save();
-        return redirect('/teacher/view');
+        dd('berasil');
+        return redirect('/karyawan');
     }
 
     /**
@@ -137,13 +147,14 @@ class teacherController extends Controller
     public function destroy($primarykey)
     {
         echo $primarykey;
-        Teacher::find($primarykey)->delete();
+        karyawan::find($primarykey)->delete();
         return redirect()->back();
     }
 
     public function importexcel(Request $request){
         $file = $request->file('file');
-        $import = Excel::import(new KaryawanImport, $file);
+        // dd($file);
+        Excel::import(new KaryawanImport, $file);
         return redirect()->back()->with('success', 'Data berhasil diimpor.');
     }
 
