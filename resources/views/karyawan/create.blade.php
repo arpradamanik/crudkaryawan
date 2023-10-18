@@ -10,7 +10,7 @@
     <div class="bg-info" >
         <h1 class="text-center">Data Karyawan Pemegang SIO/Lisensi Dan AK3 UMUM</h1>
     </div>
-    <form class="row g-3" method="POST" enctype="multipart/form-data">
+    <form class="row g-3" method="GET" enctype="multipart/form-data">
         @csrf
         <div class="col-md-6">
           <label for="inputEmail4" class="form-label">Nama</label>

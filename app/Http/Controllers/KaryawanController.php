@@ -52,7 +52,7 @@ class KaryawanController extends Controller
             $karyawan = DB::table('karyawan')->paginate(20);
         }
         $data = compact('karyawan','search');
-        return view('viewteacher')->with($data);
+        return view('karyawan.create')->with($data);
     }
 
     /**
