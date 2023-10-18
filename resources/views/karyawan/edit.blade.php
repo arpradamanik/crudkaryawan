@@ -1,11 +1,14 @@
-<body>
+@extends ('layouts.app')
 
+@section('content')
+<body>
 <div class="container">
     <div class="bg-info" >
-        <h1 class="text-center">Teacher form</h1>
+        <h1 class="text-center">Karyawan form</h1>
     </div>
-    <form class="row g-3" method="POST" enctype="multipart/form-data">
+    <form action="/karyawan-update" method="post" class="row g-3" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="id" value="{{ $karyawan->id }}">
         <div class="col-md-6">
           <label for="inputEmail4" class="form-label">Name</label>
           <input type="text" class="form-control" name="karyawan_name" value="{{$karyawan->karyawan_name}}"  id="inputEmail4">
@@ -53,3 +56,4 @@
 </div>
 
 </body>
+@endsection

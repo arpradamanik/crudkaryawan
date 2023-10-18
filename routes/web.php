@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\karyawan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,8 +23,10 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/karyawan', [App\Http\Controllers\KaryawanController::class, 'index']);
 Route::get('/karyawan/create', [App\Http\Controllers\KaryawanController::class, 'create']);
-Route::post('/karyawan/', [App\Http\Controllers\KaryawanController::class, 'store']);
+Route::post('/karyawan', [App\Http\Controllers\KaryawanController::class, 'store']);
 Route::get('/karyawan/{id}/edit', [App\Http\Controllers\KaryawanController::class, 'edit']);
-Route::patch('/karyawan/{id}', [App\Http\Controllers\KaryawanController::class, 'update']);
+Route::post('/karyawan-update', [App\Http\Controllers\KaryawanController::class, 'update']);
 Route::delete('/karyawan/{id}', [App\Http\Controllers\KaryawanController::class, 'destroy']);
+
+Route::post('/importexcel',[App\Http\Controllers\KaryawanController::class,'importexcel'])->name('importexcel');
 
