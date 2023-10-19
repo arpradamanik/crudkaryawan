@@ -2,15 +2,17 @@
 
 @section('content')
 
-      <h2>Data Karyawan Pemegang SIO/Lisensi Dan AK3 UMUM</h2>
       <body>
     <div class="container mt-5">
+    <div class="bg-info" >
+        <h1 class="text-center">Data Karyawan Pemegang SIO/Lisensi Dan AK3 UMUM</h1>
+    </div>
     <div class="col-auto">
                       <!-- Button trigger modal -->
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Import data
           </button>
-    <a href="{{ url('karyawan/create') }}"><button class="btn bg-secondary" style="float: right">Tambah Data Pelanggan</button></a>
+    <a href="{{ url('karyawan/create') }}"><button class="btn bg-primary" .text-white style="float: right">Tambah Data Karyawan</button></a>
 
                 <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -112,6 +114,5 @@
             </nav>
           </div>
         </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 @endsection

@@ -4,7 +4,7 @@
 <body>
 <div class="container">
     <div class="bg-info" >
-        <h1 class="text-center">Karyawan form</h1>
+        <h1 class="text-center">Edit Data Karyawan</h1>
     </div>
     <form action="/karyawan-update" method="post" class="row g-3" enctype="multipart/form-data">
         @csrf

@@ -2,13 +2,11 @@
 
 @section('content')
 
-<h2>Tambah Data Mahasiswa</h2>
-
 <body>
 
 <div class="container">
     <div class="bg-info" >
-        <h1 class="text-center">Data Karyawan Pemegang SIO/Lisensi Dan AK3 UMUM</h1>
+        <h1 class="text-center">Tambah Data Karyawan</h1>
     </div>
     <form class="row g-3" action="/karyawan" method="post" enctype="multipart/form-data">
         @csrf
@@ -88,8 +86,5 @@
         </div>
       </form>
 </div>
-
-    {{------------------------------- boostrap link -------------------------------}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 @endsection
