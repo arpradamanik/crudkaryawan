@@ -12,7 +12,7 @@
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Import data
           </button>
-    <a href="{{ url('karyawan/create') }}"><button class="btn bg-primary" .text-white style="float: right">Tambah Data Karyawan</button></a>
+    <a href="{{ url('karyawan/create') }}"><button class="btn btn-primary" .text-white style="float: right">Tambah Data Karyawan</button></a>
 
                 <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
