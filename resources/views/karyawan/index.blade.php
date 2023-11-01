@@ -42,6 +42,7 @@
         <input class="form-control me-2" value="{{$search}}" type="search" name="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-success" type="submit">Cari</button>
       </form>
+      <div class="overflow-x-scroll">
         <table class="table table-success">
             <thead >
               <tr>
@@ -97,8 +98,8 @@
               </tr>
               @endif
             </tbody>
-          </table>
-
+        </table>
+      </div>
           <div class="row">
             {{-- {{$karyawan->links()}} --}}
             <nav aria-label="...">
