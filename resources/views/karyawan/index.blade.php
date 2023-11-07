@@ -3,7 +3,7 @@
 @section('content')
 
       <body>
-    <div class="container mt-5">
+    <div class="container mt-2">
       <div class="row">
         <div class="col-12">
           <div class="card p-2">
@@ -41,7 +41,7 @@
                 </form>
                 </div>
               </div>
-            <form class="d-flex mb-5" action="karyawan-search" method="post">
+            <form class="d-flex mb-2" action="karyawan-search" method="post">
               @csrf
               <input class="form-control me-2" value="{{$search}}" type="search" name="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-success" type="submit">Cari</button>
